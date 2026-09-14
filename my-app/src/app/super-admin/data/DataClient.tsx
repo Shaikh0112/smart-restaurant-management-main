@@ -1,0 +1,74 @@
+"use client";
+
+// RESPONSIBILITY: SuperAdmin Data Backup & Restore page shell.
+// Wires useSuperAdminData hook to SuperAdminDataPanel.
+// DATA FLOW: useSuperAdminData → SuperAdminDataPanel → UI
+
+import { useEffect, useState } from "react";
+import { useSuperAdminData } from "@/app/super-admin/super-admin_hooks/useSuperAdminData";
+import { SuperAdminDataPanel } from "@/app/super-admin/super-admin_components/SuperAdminDataPanel";
+import { AuthGuard } from "@/app/auth/auth_components/AuthGuard";
+
+// ─── Constants (Rule 35: No magic strings) ────────────────────────────────────
+
+const PAGE_TITLE    = "Data Backup & Restore"                                    as const;
+const PAGE_SUBTITLE = "Export, import, and emergency reset system data"          as const;
+
+// ─── Main Page ────────────────────────────────────────────────────────────────
+
+export default function SuperAdminDataPage() {
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Deps: [] — run once on mount only
+  useEffect(() => setIsMounted(true), []);
+
+  const {
+    storageUsage,
+    isExporting,
+    isImporting,
+    isResetting,
+    exportBackup,
+    importRestore,
+    emergencyReset,
+  } = useSuperAdminData();
+
+  if (!isMounted) {
+    return (
+      <div className="rounded-xl border border-primary/20 bg-card/50 backdrop-blur-lg p-6 shadow-lg flex flex-col gap-6">
+        <DataPageHeader />
+        <div className="skeleton h-20 max-w-2xl rounded-xl" />
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 max-w-2xl">
+          <div className="skeleton h-36 rounded-xl" />
+          <div className="skeleton h-36 rounded-xl" />
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <AuthGuard allowedRoles={["SUPER_ADMIN"]}>
+      <div className="rounded-xl border border-primary/20 bg-white/10 backdrop-blur-lg p-6 shadow-lg flex flex-col gap-5">
+        <DataPageHeader />
+        <SuperAdminDataPanel
+          storageUsage={storageUsage}
+          isExporting={isExporting}
+          isImporting={isImporting}
+          isResetting={isResetting}
+          onExport={exportBackup}
+          onImport={importRestore}
+          onReset={emergencyReset}
+        />
+      </div>
+    </AuthGuard>
+  );
+}
+
+// RESPONSIBILITY: Static page header.
+function DataPageHeader() {
+  return (
+    <div className="flex flex-col gap-1">
+      <h1 className="text-kpi-valueage-titlexl font-bold text-text-primary">{PAGE_TITLE}</h1>
+      <p className="text-sm text-text-secondary">{PAGE_SUBTITLE}</p>
+    </div>
+  );
+}

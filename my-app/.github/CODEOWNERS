@@ -1,0 +1,13 @@
+# CODEOWNERS
+# Rule 76: Assign module-specific approvals
+
+# Global default
+*       @core-team
+
+# Admin Module
+src/app/admin/                  @admin-team
+
+# Other Modules (Examples)
+src/app/super-admin/            @super-admin-team
+src/app/cashier/                @cashier-team
+src/app/kitchen/                @kitchen-team

@@ -1,0 +1,305 @@
+@import "tailwindcss";
+
+/* ============================================================
+   DESIGN SYSTEM CSS VARIABLES (Light Mode Fallback / Root)
+   Strictly following global_design_system.md exact token names
+   ============================================================ */
+:root {
+  /* Backgrounds */
+  --bg-page:     #F4F4F5;
+  --bg-card:     #FFFFFF;
+  --bg-sidebar:  #FAFAFA;
+  --bg-header:   #FFFFFF;
+  --bg-input:    #FFFFFF;
+  --background:  #F4F4F5;
+
+  
+  /* Elevation Layers (Light Mode) */
+  --bg-floating: #FFFFFF;
+  --bg-overlay:  rgba(0, 0, 0, 0.4);
+  --bg-popover:  #FFFFFF;
+
+  /* Borders */
+  --border:       #E4E4E7;
+  --border-focus: #EAB308;
+
+  /* Text */
+  --text-primary:   #000000;
+  --text-secondary: #52525B;
+  --text-disabled:  #A1A1AA;
+
+  /* Primary */
+  --primary:        #EAB308;
+  --primary-hover:  #CA8A04;
+  --primary-subtle: #FEF9C3;
+
+  /* Status Text */
+  --success: #15803d;
+  --warning: #b45309;
+  --danger:  #b91c1c;
+  --info:    #1d4ed8;
+
+  /* Status Backgrounds */
+  --success-bg: #dcfce7;
+  --warning-bg: #fef3c7;
+  --danger-bg:  #fee2e2;
+  --info-bg:    #dbeafe;
+
+  /* Payment text */
+  --pay-cash: #0f766e;
+  --pay-upi:  #0e7490;
+  --pay-card: #334155;
+  --pay-bank: #0369a1;
+
+  /* Payment backgrounds */
+  --pay-cash-bg: #ccfbf1;
+  --pay-upi-bg:  #cffafe;
+  --pay-card-bg: #f1f5f9;
+  --pay-bank-bg: #e0f2fe;
+
+  /* Skeletons */
+  --skeleton-base:      #E4E4E7;
+  --skeleton-highlight: #F4F4F5;
+}
+
+/* ============================================================
+   DARK MODE
+   ============================================================ */
+.dark {
+  /* Backgrounds */
+  --bg-page:     #050505;
+  --bg-card:     #111111;
+  --bg-sidebar:  #050505;
+  --bg-header:   #111111;
+  --bg-input:    #1A1A1A;
+  --background:  #050505;
+
+  
+  /* Elevation Layers (Dark Mode) */
+  --bg-floating: #1A1A1A;
+  --bg-overlay:  #242424;
+  --bg-popover:  #2E2E2E;
+
+  /* Borders */
+  --border:       #27272A;
+  --border-focus: #FACC15;
+
+  /* Text */
+  --text-primary:   #FFFFFF;
+  --text-secondary: #A1A1AA;
+  --text-disabled:  #52525B;
+
+  /* Primary */
+  --primary:        #FACC15;
+  --primary-hover:  #EAB308;
+  --primary-subtle: rgba(250, 204, 21, 0.15);
+
+  /* Status Text */
+  --success: #22C55E;
+  --warning: #F59E0B;
+  --danger:  #EF4444;
+  --info:    #3B82F6;
+  
+  /* Status Backgrounds */
+  --success-bg: #064E3B;
+  --warning-bg: #451A03;
+  --danger-bg:  #450A0A;
+  --info-bg:    #1E3A5F;
+
+  /* Payment text */
+  --pay-cash: #5EEAD4;
+  --pay-upi:  #67E8F9;
+  --pay-card: #94A3B8;
+  --pay-bank: #38BDF8;
+
+  /* Payment backgrounds */
+  --pay-cash-bg: #134E4A;
+  --pay-upi-bg:  #164E63;
+  --pay-card-bg: #1E293B;
+  --pay-bank-bg: #0C4A6E;
+
+  /* Skeletons */
+  --skeleton-base:      #111111;
+  --skeleton-highlight: #1A1A1A;
+}
+
+/* ============================================================
+   TAILWIND v4 @THEME MAPPING
+   Maps exact CSS Variables to Tailwind v4 color scale utilities
+   ============================================================ */
+@theme {
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
+
+  /* Typography Design System Tokens */
+  --text-page-title: 22px;
+  --text-kpi-value: 28px;
+  --text-badge: 11px;
+  --text-table-header: 12px;
+  --text-body: 14px;
+  --text-small: 13px;
+  --text-micro: 10px;
+  --text-hero: 32px;
+
+  /* Border radius */
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-full: 999px;
+
+  /* Colors */
+  --color-page:    var(--bg-page);
+  --color-card:    var(--bg-card);
+  --color-sidebar: var(--bg-sidebar);
+  --color-header:  var(--bg-header);
+  --color-input:   var(--bg-input);
+  --color-background: var(--background);
+  
+  --color-floating: var(--bg-floating);
+  --color-overlay:  var(--bg-overlay);
+  --color-popover:  var(--bg-popover);
+
+  --color-border:       var(--border);
+  --color-border-focus: var(--border-focus);
+
+  --color-text-primary:   var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-disabled:  var(--text-disabled);
+
+  --color-primary:        var(--primary);
+  --color-primary-hover:  var(--primary-hover);
+  --color-primary-subtle: var(--primary-subtle);
+
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger:  var(--danger);
+  --color-info:    var(--info);
+
+  --color-success-bg: var(--success-bg);
+  --color-warning-bg: var(--warning-bg);
+  --color-danger-bg:  var(--danger-bg);
+  --color-info-bg:    var(--info-bg);
+
+  --color-skeleton-base:      var(--skeleton-base);
+  --color-skeleton-highlight: var(--skeleton-highlight);
+}
+
+/* ============================================================
+   BASE STYLES
+   ============================================================ */
+html {
+  font-size: 14px;
+}
+
+body {
+  background-color: var(--color-page);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================================
+   TYPOGRAPHY - 4 TIER STRICT SCALE
+   ============================================================ */
+h1, .h1 {
+  font-size: 2rem;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+h2, .h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+h3, .h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+p, .body {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+
+/* ============================================================
+   CUSTOM SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar        { width: 6px; height: 6px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background-color: var(--color-border); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background-color: var(--color-text-disabled); }
+* { scrollbar-width: thin; scrollbar-color: var(--color-border) transparent; }
+
+/* ============================================================
+   FOCUS RING & ACCESSIBILITY
+   ============================================================ */
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-page), 0 0 0 4px var(--color-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   SKELETON ANIMATION
+   ============================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes skeleton-shimmer {
+    0%   { background-position: -200% 0; }
+    100% { background-position:  200% 0; }
+  }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-skeleton-base) 25%,
+    var(--color-skeleton-highlight) 50%,
+    var(--color-skeleton-base) 75%
+  );
+  background-size: 200% 100%;
+  border-radius: var(--radius-md);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .skeleton {
+    animation: skeleton-shimmer 1.5s infinite;
+  }
+}
+
+/* ============================================================
+   PRINT CSS
+   ============================================================ */
+@media print {
+  [data-print="hide"], [data-sidebar], [data-header],
+  [data-toast], [data-action-bar], nav, aside {
+    display: none !important;
+  }
+  body, * {
+    background: #ffffff !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+  }
+  main, [data-print="content"] {
+    margin: 0 !important; padding: 0 !important; width: 100% !important;
+  }
+  [data-receipt="80mm"] { width: 302px; font-size: 12px; line-height: 1.4; }
+  [data-receipt="58mm"] { width: 219px; font-size: 11px; line-height: 1.3; }
+  .print-break-before  { page-break-before: always; }
+  .print-break-after   { page-break-after: always; }
+  .print-no-break      { page-break-inside: avoid; }
+}

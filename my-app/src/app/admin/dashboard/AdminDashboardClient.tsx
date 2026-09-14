@@ -1,0 +1,98 @@
+"use client";
+
+// RESPONSIBILITY: Admin Dashboard Client Component.
+// Composes AdminKpiGrid + AdminRevenueChart + AdminPaymentDonut + AdminLowStockSlaTracker + AdminStaffCredentialsPanel.
+// All data logic delegated to useAdminDashboard hook.
+// isMounted guard prevents SSR/client hydration mismatch.
+
+import { useState, useEffect } from "react";
+import { useAdminDashboard } from "@/app/admin/admin_hooks/useAdminDashboard";
+import { AdminKpiGrid, AdminKpiCardSkeleton } from "@/app/admin/dashboard/admin_dashboard_components/AdminKpiGrid";
+import { AdminRevenueChart } from "@/app/admin/dashboard/admin_dashboard_components/AdminRevenueChart";
+import { AdminPaymentDonut } from "@/app/admin/dashboard/admin_dashboard_components/AdminPaymentDonut";
+import { AdminStaffCredentialsPanel } from "@/app/admin/staff/admin_staff_components/AdminStaffCredentialsPanel";
+import { AdminLowStockSlaTracker } from "@/app/admin/dashboard/admin_dashboard_components/AdminLowStockSlaTracker";
+import { AuthGuard } from "@/app/auth/auth_components/AuthGuard";
+import { useAuth } from "@/app/auth/auth_hooks/useAuth";
+import { getTenantsByOwner } from "@/lib/tenantService";
+import { useRouter } from "next/navigation";
+
+const PAGE_TITLE       = "Analytics Dashboard" as const;
+const PAGE_SUBTITLE    = "Live analytics, operations, and staff credential management" as const;
+const SKELETON_COUNT   = 6 as const;
+
+export function AdminDashboardClient() {
+  const [isMounted, setIsMounted] = useState(false);
+  const router = useRouter();
+
+  const { currentUser, isHydrated: authHydrated } = useAuth();
+  
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Bounce MANAGER to owner dashboard if their hotel is not ACTIVE
+  useEffect(() => {
+    if (authHydrated && currentUser && currentUser.role === "MANAGER") {
+      const ownerTenants = getTenantsByOwner(currentUser.id, currentUser.phone || undefined);
+      const activeTenant = ownerTenants.find(t => t.status === "ACTIVE");
+      if (!activeTenant) {
+        router.replace("/manager/dashboard");
+      }
+    }
+  }, [authHydrated, currentUser]);
+
+  const { kpiCards, dailyStats, paymentSplit, totalTransactions } = useAdminDashboard();
+
+  if (!isMounted) {
+    return (
+      <div className="rounded-xl border border-primary/20 bg-card backdrop-blur-lg p-6 shadow-lg flex flex-col gap-6">
+        <AdminPageHeader />
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-6">
+          {Array.from({ length: SKELETON_COUNT }).map((_, i) => (
+            <AdminKpiCardSkeleton key={i} />
+          ))}
+        </div>
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_320px]">
+          <div className="skeleton h-[308px] rounded-lg" />
+          <div className="skeleton h-[308px] rounded-lg" />
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <AuthGuard allowedRoles={["ADMIN", "MANAGER"]}>
+      <div className="rounded-xl border border-primary/20 bg-card backdrop-blur-lg p-6 shadow-lg flex flex-col gap-6">
+        <AdminPageHeader />
+
+        {/* Live Kitchen Low Stock SLA Tracker & 24-Hour Escalation Monitor */}
+        <AdminLowStockSlaTracker />
+
+        {/* KPI Cards --- top row */}
+        <AdminKpiGrid cards={kpiCards} />
+
+        {/* Charts row --- Revenue bar+line left, Payment donut right */}
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_320px]">
+          <AdminRevenueChart dailyStats={dailyStats} />
+          <AdminPaymentDonut
+            paymentSplit={paymentSplit}
+            totalTransactions={totalTransactions}
+          />
+        </div>
+
+        {/* Staff Management & Credentials Generator Panel */}
+        <AdminStaffCredentialsPanel />
+      </div>
+    </AuthGuard>
+  );
+}
+
+function AdminPageHeader() {
+  return (
+    <div className="flex flex-col gap-1">
+      <h1 className="text-2xl font-bold text-primary">{PAGE_TITLE}</h1>
+      <p className="text-sm text-text-secondary">{PAGE_SUBTITLE}</p>
+    </div>
+  );
+}

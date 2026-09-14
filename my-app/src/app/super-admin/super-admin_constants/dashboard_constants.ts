@@ -1,0 +1,1 @@
+export const SUPER_ADMIN_DASHBOARD_KPIS = { totalRevenue: 1000000, totalHotels: 50, joinedToday: 5, pendingAuditCount: 12, paidHotelsCount: 45, activePosCount: 120 };
