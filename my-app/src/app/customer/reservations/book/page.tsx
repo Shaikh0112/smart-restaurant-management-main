@@ -11,9 +11,9 @@ import { STORAGE_KEYS } from "@/lib/localStorageSeeder";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useAuth } from "@/app/auth/auth_hooks/useAuth";
 import type { AppMenuItem, AppTenant, AppPreOrderItem } from "@/types/appTypes";
-import { CustomerReservationBookingForm } from "./customer_reservations_components/CustomerReservationBookingForm";
-import { CustomerReservationPreOrderMenu } from "./customer_reservations_components/CustomerReservationPreOrderMenu";
-import { CustomerReservationPaymentModal } from "./customer_reservations_components/CustomerReservationPaymentModal";
+import { CustomerReservationBookingForm } from "../customer_reservations_components/CustomerReservationBookingForm";
+import { CustomerReservationPreOrderMenu } from "../customer_reservations_components/CustomerReservationPreOrderMenu";
+import { CustomerReservationPaymentModal } from "../customer_reservations_components/CustomerReservationPaymentModal";
 
 export const dynamic = 'force-dynamic';
 
