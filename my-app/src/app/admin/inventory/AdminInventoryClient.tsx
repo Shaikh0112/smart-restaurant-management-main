@@ -21,7 +21,7 @@ export function AdminInventoryClient() {
 
   const handleOpenAdd = () => setIsModalOpen(true);
 
-  const handleSave = (values: Omit<AppInventoryItem, "id" | "currentStock">) => {
+  const handleSave = (values: Omit<AppInventoryItem, "id">) => {
     addInventoryItem(values);
   };
 

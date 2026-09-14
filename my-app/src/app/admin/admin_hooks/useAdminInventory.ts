@@ -105,12 +105,11 @@ export function useAdminInventory(): UseAdminInventoryReturn {
   );
 
   const addInventoryItem = useCallback(
-    (values: Omit<AppInventoryItem, "id" | "currentStock">) => {
+    (values: Omit<AppInventoryItem, "id">) => {
       setInventoryItems((prev) => [
         ...prev,
         {
           id: generateId("inv"),
-          currentStock: 0,
           ...values,
         },
       ]);
@@ -122,7 +121,7 @@ export function useAdminInventory(): UseAdminInventoryReturn {
     inventoryItems,
     lowStockItems,
     expiringItems,
-    isSubmitting: fetchState === FetchState.LOADING,
+    fetchState,
     updateStock,
     deleteInventoryItem,
     updateExpiryDate,
